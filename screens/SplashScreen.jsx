@@ -4,8 +4,14 @@ import colors from "../colors";
 import CustomText from "../components/CustomText";
 import { Button } from "react-native-paper";
 import { Fonts } from "../theme";
+import { useNavigation } from "@react-navigation/native";
 
 const SplashScreen = () => {
+  const navigation = useNavigation();
+
+  const navigateToLogin = () => {
+    navigation.navigate("Login");
+  };
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.textContainer}>
@@ -25,6 +31,7 @@ const SplashScreen = () => {
           buttonColor={colors.primary}
           style={styles.button}
           labelStyle={styles.buttonText}
+          onPress={navigateToLogin}
         >
           Get Started
         </Button>
