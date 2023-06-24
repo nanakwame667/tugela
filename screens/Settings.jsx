@@ -53,16 +53,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  headerContainer: {
-    flex: 0.1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    width: "100%",
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    backgroundColor: colors.white,
-  },
   list: {
     flex: 0.9,
     paddingVertical: 46,
