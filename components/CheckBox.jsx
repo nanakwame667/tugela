@@ -26,6 +26,7 @@ const styles = {
   container: {
     flexDirection: "row",
     alignItems: "center",
+    marginRight: 30,
   },
   checkbox: {
     width: 26,
@@ -41,9 +42,10 @@ const styles = {
     backgroundColor: colors.primary,
   },
   label: {
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: Fonts.regular,
     color: colors.primary,
+    flexWrap: "wrap",
   },
 };
 

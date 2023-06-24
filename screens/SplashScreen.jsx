@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
-    fontFamily: "Regular",
+    fontFamily: Fonts.regular,
   },
   textContainer: {
     flex: 0.3,

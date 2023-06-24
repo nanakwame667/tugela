@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Image,
@@ -15,14 +15,31 @@ import CustomText from "../../components/CustomText";
 import colors from "../../colors";
 import { Fonts } from "../../theme";
 import CheckBox from "../../components/CheckBox";
+import * as yup from "yup";
+import { useFormik } from "formik";
+import { AuthContext } from "../../context/AuthContext";
 
+const validationSchema = yup.object().shape({
+  email: yup
+    .string()
+    .email("Please enter a valid email address")
+    .required("Email is required"),
+  password: yup
+    .string()
+    .min(8, "Password must be at least 8 characters")
+    .required("Password is required"),
+});
 const LoginScreen = () => {
   const navigation = useNavigation();
-  const [text, setText] = useState("");
-  const [password, setPassword] = useState("");
   const [isFocused, setFocused] = useState(false);
   const [isFocusedPassword, setFocusedPassword] = useState(false);
   const [checked, setChecked] = useState(false);
+
+  const authContext = useContext(AuthContext);
+  if (!authContext) {
+    throw new Error("LoginScreen must be used within an AuthProvider");
+  }
+  const { setUserAuthenticated } = authContext;
   const handleCheckChange = (checked) => {
     setChecked(checked);
     console.log("Checkbox checked:", checked);
@@ -31,7 +48,24 @@ const LoginScreen = () => {
   const navigateToSignUp = () => {
     navigation.navigate("SignUp");
   };
-
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema,
+    onSubmit: () => {
+      if (formik.isValid) {
+        setUserAuthenticated(true);
+        navigation.navigate("Tab");
+      } else {
+        Alert.alert(
+          "Validation Error",
+          "Please fill in all the required fields."
+        );
+      }
+    },
+  });
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
@@ -45,23 +79,37 @@ const LoginScreen = () => {
           <View style={styles.formContainer}>
             <TextInput
               placeholder="Email Address"
-              value={text}
-              onChangeText={setText}
+              value={formik.values.email}
+              onChangeText={formik.handleChange("email")}
               style={isFocused ? styles.inputActive : styles.input}
               onFocus={() => setFocused(true)}
               onBlur={() => setFocused(false)}
               maxLength={40}
             />
+            {formik.touched.email && formik.errors.email && (
+              <CustomText style={styles.errorText}>
+                {formik.errors.email}
+              </CustomText>
+            )}
             <View style={styles.formPass}>
-              <TextInput
-                secureTextEntry
-                placeholder="Password"
-                value={password}
-                onChangeText={setPassword}
-                style={isFocusedPassword ? styles.inputActive1 : styles.input1}
-                onFocus={() => setFocusedPassword(true)}
-                onBlur={() => setFocusedPassword(false)}
-              />
+              <View style={styles.passInput}>
+                <TextInput
+                  secureTextEntry
+                  placeholder="Password"
+                  value={formik.values.password}
+                  onChangeText={formik.handleChange("password")}
+                  style={
+                    isFocusedPassword ? styles.inputActive1 : styles.input1
+                  }
+                  onFocus={() => setFocusedPassword(true)}
+                  onBlur={() => setFocusedPassword(false)}
+                />
+                {formik.touched.password && formik.errors.password && (
+                  <CustomText style={styles.errorText}>
+                    {formik.errors.password}
+                  </CustomText>
+                )}
+              </View>
               <Button
                 mode="text"
                 style={styles.textButton}
@@ -77,9 +125,24 @@ const LoginScreen = () => {
                 onCheckChange={handleCheckChange}
               />
             </View>
-            <View>
-              <Button>Sign In</Button>
-              <Button>Sign Up</Button>
+            <View style={styles.buttonGroup}>
+              <Button
+                mode="contained"
+                buttonColor={colors.primary}
+                style={styles.button}
+                labelStyle={styles.buttonText}
+                onPress={() => formik.handleSubmit()}
+              >
+                Sign In
+              </Button>
+              <Button
+                mode="outlined"
+                style={styles.button1}
+                labelStyle={styles.buttonText1}
+                onPress={navigateToSignUp}
+              >
+                Sign Up
+              </Button>
             </View>
           </View>
         </KeyboardAvoidingView>
@@ -100,9 +163,16 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
   },
   formContainer: {
-    flex: 0.4,
+    flex: 0.6,
     marginHorizontal: 22,
     marginVertical: 45,
+  },
+  passInput: {
+    width: "60%",
+  },
+  errorText: {
+    color: colors.danger,
+    marginVertical: 6,
   },
   formPass: {
     flexDirection: "row",
@@ -110,7 +180,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   check: {
-    marginVertical: 8,
+    marginTop: 45,
   },
   textButton: {
     color: colors.danger,
@@ -174,6 +244,35 @@ const styles = StyleSheet.create({
   buttonGroup: {
     flexDirection: "row",
     marginVertical: 10,
+    width: "100%",
+    justifyContent: "space-between",
+    marginVertical: 60,
+  },
+  button: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    height: 70,
+    width: "44%",
+  },
+  button1: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    height: 70,
+    width: "48%",
+    borderRadius: 50,
+    borderColor: colors.primary,
+    borderWidth: 3,
+  },
+  buttonText: {
+    fontSize: 16,
+    fontFamily: Fonts.semiBold,
+  },
+  buttonText1: {
+    fontSize: 16,
+    fontFamily: Fonts.semiBold,
+    color: colors.primary,
   },
 });
 
