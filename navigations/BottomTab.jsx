@@ -20,7 +20,7 @@ const BottomTab = () => {
           let iconName;
 
           if (route.name === "home") {
-            iconName = "searchengin";
+            iconName = "home";
           } else if (route.name === "jobs") {
             iconName = "briefcase";
           } else if (route.name === "profile") {

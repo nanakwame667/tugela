@@ -1,17 +1,9 @@
 import React from "react";
 import colors from "../colors";
 import CustomText from "../components/CustomText";
-import { SettingsData } from "../data/settingsData";
 import { NotificationsData } from "../data/NotificationData";
 import Header from "../components/Header";
-import {
-  View,
-  Text,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  FlatList,
-} from "react-native";
+import { View, Text, SafeAreaView, StyleSheet, FlatList } from "react-native";
 
 const Item = ({ title, time }) => (
   <View style={styles.item}>
@@ -28,6 +20,7 @@ const Item = ({ title, time }) => (
     </View>
   </View>
 );
+
 const Notifications = () => {
   return (
     <SafeAreaView style={styles.container}>
@@ -35,8 +28,10 @@ const Notifications = () => {
         title={"Notifications"}
         iconStyle={styles.iconContainer}
         iconName="long-arrow-left"
+        color={colors.white}
+        size={24}
       />
-      <ScrollView style={styles.list}>
+      <View style={styles.list}>
         <FlatList
           data={NotificationsData}
           renderItem={({ item }) => (
@@ -44,7 +39,7 @@ const Notifications = () => {
           )}
           keyExtractor={(item) => item.id}
         />
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };
@@ -101,17 +96,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.title,
   },
-  text: {
-    fontSize: 20,
-    color: colors.primary,
-  },
   time: {
     marginTop: 10,
     textAlign: "right",
     color: colors.title,
-  },
-
-  keyboardAvoidingView: {
-    flex: 0.3,
   },
 });

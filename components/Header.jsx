@@ -1,15 +1,18 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import CustomText from "./CustomText";
 import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import colors from "../colors";
 
-const Header = ({ title, iconName, iconStyle }) => {
+const Header = ({ title, iconName, iconStyle, color, size, onPress }) => {
   return (
     <View style={styles.headerContainer}>
-      <View style={[styles.iconContainer, iconStyle]}>
-        <FontAwesome name={iconName} size={24} color={colors.white} />
-      </View>
+      <TouchableOpacity
+        style={[styles.iconContainer, iconStyle]}
+        onPress={onPress}
+      >
+        <FontAwesome name={iconName} size={size} color={color} />
+      </TouchableOpacity>
       <CustomText weight="bold" style={styles.text}>
         {title}
       </CustomText>

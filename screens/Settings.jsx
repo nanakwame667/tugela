@@ -25,6 +25,8 @@ const Settings = () => {
         title={"Settings"}
         iconStyle={styles.iconContainer}
         iconName="long-arrow-left"
+        color={colors.white}
+        size={24}
       />
       <View style={styles.list}>
         <FlatList

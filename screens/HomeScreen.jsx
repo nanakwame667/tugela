@@ -2,11 +2,26 @@ import { View, Text, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import React from "react";
 import colors from "../colors";
 import { Fonts } from "../theme";
+import Header from "../components/Header";
+import Filter from "../components/Filter";
+import DemandJob from "../components/Jobs/DemandJob";
 
 const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <Text>HomeScreen</Text>
+      <Header
+        title={"On-demand Jobs"}
+        iconStyle={styles.iconContainer}
+        iconName="search"
+        color={colors.title}
+        size={22}
+      />
+      <View style={styles.check}>
+        <Filter />
+      </View>
+      <View style={styles.job}>
+        <DemandJob />
+      </View>
     </SafeAreaView>
   );
 };
@@ -22,6 +37,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: colors.background,
+  },
+  iconContainer: {
+    backgroundColor: null,
   },
   formContainer: {
     flex: 0.6,
@@ -41,7 +59,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   check: {
-    marginTop: 45,
+    flex: 0.2,
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%",
+  },
+  job: {
+    flex: 0.7,
+    marginHorizontal: 20,
   },
   textButton: {
     color: colors.danger,
