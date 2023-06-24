@@ -8,7 +8,8 @@ const colors = {
   background: "#C6E6F5",
   danger: "#EC6161",
   space: "#BCBCBC",
-  icon: "#D8D8D8",
+  text: "#002D3C",
+  screenBackground: "#F9F9F9",
 };
 
 export default colors;
