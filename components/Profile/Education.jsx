@@ -3,6 +3,7 @@ import React from "react";
 import colors from "../../colors";
 import CustomText from "../CustomText";
 import { Fonts } from "../../theme";
+import { Button } from "react-native-paper";
 const Education = () => {
   return (
     <SafeAreaView style={styles.container}>
@@ -10,6 +11,22 @@ const Education = () => {
         <CustomText style={{ fontSize: 18, color: colors.title }} weight="bold">
           Education
         </CustomText>
+      </View>
+      <View style={styles.buttonGroup}>
+        <Button
+          mode="outlined"
+          style={styles.button}
+          labelStyle={styles.buttonText}
+        >
+          Udacity
+        </Button>
+        <Button
+          mode="outlined"
+          style={styles.button1}
+          labelStyle={styles.buttonText}
+        >
+          Blossom Academy
+        </Button>
       </View>
     </SafeAreaView>
   );
@@ -42,5 +59,40 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "100%",
     marginVertical: 40,
+  },
+  buttonGroup: {
+    flexDirection: "column",
+    marginVertical: 10,
+    width: "100%",
+    justifyContent: "space-between",
+    marginVertical: 30,
+  },
+  button: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    height: 70,
+    width: "50%",
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: colors.primary,
+    marginVertical: 10,
+  },
+  button1: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    height: 70,
+    width: "90%",
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: colors.primary,
+    marginVertical: 10,
+  },
+  buttonText: {
+    fontSize: 16,
+    fontFamily: Fonts.bold,
+    color: colors.primary,
+    width: "100%",
   },
 });
