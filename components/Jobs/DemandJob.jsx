@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
-import { NotificationsData } from "../../data/NotificationData";
 import { DemandData } from "../../data/DemandData";
 import colors from "../../colors";
 import CustomText from "../CustomText";

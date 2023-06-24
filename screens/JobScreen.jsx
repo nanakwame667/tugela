@@ -4,6 +4,7 @@ import colors from "../colors";
 import { Fonts } from "../theme";
 import Header from "../components/Header";
 import Filter from "../components/Filter";
+import MyJobs from "../components/Jobs/MyJobs";
 
 const JobScreen = () => {
   return (
@@ -18,6 +19,9 @@ const JobScreen = () => {
       <View style={styles.check}>
         <Filter />
       </View>
+      <View style={styles.job}>
+        <MyJobs />
+      </View>
     </SafeAreaView>
   );
 };
@@ -28,6 +32,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.screenBackground,
+  },
+  job: {
+    flex: 0.7,
+    marginHorizontal: 20,
   },
   textContainer: {
     flex: 0.4,
