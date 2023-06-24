@@ -5,16 +5,41 @@ import {
   SafeAreaView,
   StyleSheet,
   TouchableOpacity,
+  Linking,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DemandData } from "../../data/DemandData";
 import colors from "../../colors";
 import CustomText from "../CustomText";
 import { FontAwesome } from "@expo/vector-icons";
-import { Button, Chip } from "react-native-paper";
+import { Button, Chip, ActivityIndicator } from "react-native-paper";
 import { Fonts } from "../../theme";
+import CustomModal from "../Modal";
 
 const Item = ({ title, time, category, salary, description }) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [cancelled, setCancelled] = useState(false);
+  const toggleModal = () => {
+    setModalVisible(!modalVisible);
+    setCancelled(!cancelled);
+  };
+  useEffect(() => {
+    if (modalVisible) {
+      setTimeout(() => {
+        setModalVisible(false);
+        // Only open the URL if the cancel action hasn't been taken
+        if (!cancelled) {
+          Linking.openURL("http://www.upwork.com");
+        }
+      }, 5000);
+    }
+  }, [modalVisible]);
+
+  const onCancel = () => {
+    setCancelled(true);
+    toggleModal();
+  };
+
   const [isClicked, setIsClicked] = useState(true);
 
   const heartClick = () => {
@@ -69,9 +94,85 @@ const Item = ({ title, time, category, salary, description }) => {
             buttonColor={colors.primary}
             style={styles.button}
             labelStyle={styles.buttonText}
+            onPress={toggleModal}
           >
             Apply Now
           </Button>
+          <CustomModal
+            visible={modalVisible}
+            toggleModal={toggleModal}
+            style={styles.modal}
+          >
+            <View style={{ paddingBottom: 50 }}>
+              <CustomText
+                style={{
+                  fontSize: 24,
+                  textAlign: "center",
+                  color: colors.text,
+                  paddingVertical: 5,
+                }}
+                weight="bold"
+              >
+                You are about to
+              </CustomText>
+              <CustomText
+                style={{
+                  fontSize: 22,
+                  textAlign: "center",
+                  color: colors.text,
+                }}
+                weight="bold"
+              >
+                leave Tugela
+              </CustomText>
+              <CustomText
+                style={{
+                  fontSize: 20,
+                  textAlign: "center",
+                  color: colors.text,
+                  paddingTop: 20,
+                }}
+                weight="regular"
+              >
+                visiting
+              </CustomText>
+              <CustomText
+                style={{
+                  fontSize: 22,
+                  textAlign: "center",
+                  color: colors.text,
+                  paddingTop: 20,
+                }}
+                weight="bold"
+              >
+                www.upwork.com
+              </CustomText>
+            </View>
+            <ActivityIndicator
+              animating={true}
+              color={colors.primary}
+              size={"large"}
+              style={{ paddingBottom: 30 }}
+            />
+            <Button
+              onPress={onCancel}
+              mode="outlined"
+              style={{
+                width: "60%",
+                borderWidth: 2,
+                borderRadius: 50,
+                borderColor: colors.primary,
+                paddingVertical: 5,
+              }}
+            >
+              <CustomText
+                style={{ color: colors.primary, fontSize: 18 }}
+                weight="medium"
+              >
+                Cancel
+              </CustomText>
+            </Button>
+          </CustomModal>
         </View>
         <View style={styles.description}>
           <CustomText style={{ fontSize: 14, lineHeight: 24 }}>
@@ -146,6 +247,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+  },
+  modal: {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
   },
   list: {
     flex: 0.9,

@@ -1,10 +1,19 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  BackHandler,
+} from "react-native";
 import React from "react";
 import CustomText from "./CustomText";
 import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import colors from "../colors";
 
 const Header = ({ title, iconName, iconStyle, color, size, onPress }) => {
+  const exitApp = () => {
+    BackHandler.exitApp();
+  };
   return (
     <View style={styles.headerContainer}>
       <TouchableOpacity
@@ -16,7 +25,9 @@ const Header = ({ title, iconName, iconStyle, color, size, onPress }) => {
       <CustomText weight="bold" style={styles.text}>
         {title}
       </CustomText>
-      <FontAwesome5 name="power-off" size={24} color={colors.danger} />
+      <TouchableOpacity onPress={exitApp}>
+        <FontAwesome5 name="power-off" size={24} color={colors.danger} />
+      </TouchableOpacity>
     </View>
   );
 };
