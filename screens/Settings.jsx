@@ -8,11 +8,9 @@ import {
 } from "react-native";
 import React from "react";
 import colors from "../colors";
-import { Fonts } from "../theme";
 import CustomText from "../components/CustomText";
-import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import { SettingsData } from "../data/settingsData";
-
+import Header from "../components/Header";
 const Item = ({ title }) => (
   <View style={styles.item}>
     <CustomText style={styles.title} weight="medium">
@@ -23,15 +21,11 @@ const Item = ({ title }) => (
 const Settings = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.headerContainer}>
-        <View style={styles.iconContainer}>
-          <FontAwesome name="long-arrow-left" size={24} color={colors.white} />
-        </View>
-        <CustomText weight="bold" style={styles.text}>
-          Settings
-        </CustomText>
-        <FontAwesome5 name="power-off" size={24} color={colors.danger} />
-      </View>
+      <Header
+        title={"Settings"}
+        iconStyle={styles.iconContainer}
+        iconName="long-arrow-left"
+      />
       <View style={styles.list}>
         <FlatList
           data={SettingsData}
