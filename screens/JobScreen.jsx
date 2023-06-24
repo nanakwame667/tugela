@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     width: "100%",
+    zIndex: 100,
   },
   textButton: {
     color: colors.danger,
